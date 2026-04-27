@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIS Standards Recommendation Engine</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="brand">
+                    <div class="logo">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h1>BIS Standards Engine</h1>
+                        <span class="subtitle">AI-Powered Standard Discovery for Building Materials</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="/api/docs" target="_blank" class="btn-outline">
+                        <i class="fas fa-book"></i> API Docs
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="single">
+                    <i class="fas fa-search"></i> Single Query
+                </button>
+                <button class="tab-btn" data-tab="batch">
+                    <i class="fas fa-layer-group"></i> Batch Upload
+                </button>
+                <button class="tab-btn" data-tab="browse">
+                    <i class="fas fa-list"></i> Browse Standards
+                </button>
+            </div>
+
+            <!-- Single Query Tab -->
+            <div class="tab-panel active" id="single-panel">
+                <div class="search-card">
+                    <div class="search-header">
+                        <h2><i class="fas fa-search"></i> Find Relevant BIS Standards</h2>
+                        <p class="hint">Enter a product description to discover applicable BIS SP 21 standards</p>
+                    </div>
+                    
+                    <div class="search-form">
+                        <div class="input-group">
+                            <label for="queryInput">Product Description</label>
+                            <textarea 
+                                id="queryInput" 
+                                placeholder="e.g., Ordinary Portland Cement 53 grade for high-rise structural concrete"
+                                rows="3"
+                                maxlength="1000"
+                            ></textarea>
+                            <span class="char-count"><span id="charCount">0</span> / 1000</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="topKInput">Number of Results</label>
+                                <div class="range-group">
+                                    <input type="range" id="topKInput" min="1" max="20" value="5">
+                                    <span class="range-value" id="topKValue">5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-primary btn-large" id="searchBtn">
+                            <i class="fas fa-search"></i> Search Standards
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                    <p>Analyzing your query and matching BIS standards...</p>
+                </div>
+
+                <!-- Error State -->
+                <div class="error-state" id="errorState">
+                    <div class="error-icon"><i class="fas fa-exclamation-circle"></i></div>
+                    <h3 id="errorTitle">Error</h3>
+                    <p id="errorMessage">Something went wrong</p>
+                    <span class="error-suggestion" id="errorSuggestion"></span>
+                </div>
+
+                <!-- Results -->
+                <div class="results-section" id="resultsSection">
+                    <div class="results-header">
+                        <div>
+                            <h2><i class="fas fa-clipboard-list"></i> Retrieved Standards</h2>
+                            <p class="results-meta">
+                                Query: <span id="resultQuery"></span> | 
+                                Latency: <span id="resultLatency"></span>s |
+                                Found: <span id="resultCount"></span> standards
+                            </p>
+                        </div>
+                        <div class="results-actions">
+                            <button class="btn-secondary" id="copyResultsBtn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="btn-secondary" id="exportResultsBtn">
+                                <i class="fas fa-download"></i> Export JSON
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="results-grid" id="resultsGrid"></div>
+                </div>
+            </div>
+
+            <!-- Batch Upload Tab -->
+            <div class="tab-panel" id="batch-panel">
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <h2><i class="fas fa-cloud-upload-alt"></i> Batch Process Queries</h2>
+                        <p class="hint">Upload a JSON file with multiple queries for bulk processing</p>
+                    </div>
+
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" id="fileInput" accept=".json" hidden>
+                        <div class="upload-content">
+                            <i class="fas fa-file-upload"></i>
+                            <h3>Drop your JSON file here</h3>
+                            <p>or <span class="link">click to browse</span></p>
+                            <span class="file-types">Supports: .json</span>
+                        </div>
+                    </div>
+
+                    <div class="upload-template">
+                        <p>Expected format:</p>
+                        <pre><code>[{
+  "id": "q01",
+  "query": "Ordinary Portland Cement 53 grade for high-rise structural concrete"
+}, {
+  "id": "q02", 
+  "query": "TMT steel bars Fe500D for reinforced concrete columns"
+}]</code></pre>
+                    </div>
+                </div>
+
+                <!-- Batch Loading -->
+                <div class="loading-state" id="batchLoadingState">
+                    <div class="spinner"></div>
+                    <p>Processing batch queries...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="batchProgress"></div>
+                    </div>
+                </div>
+
+                <!-- Batch Error -->
+                <div class="error-state" id="batchErrorState">
+                    <div class="error-icon"><i class="fas fa-exclamation-circle"></i></div>
+                    <h3 id="batchErrorTitle">Error</h3>
+                    <p id="batchErrorMessage">Something went wrong</p>
+                </div>
+
+                <!-- Batch Results -->
+                <div class="results-section" id="batchResultsSection">
+                    <div class="results-header">
+                        <div>
+                            <h2><i class="fas fa-check-circle"></i> Batch Results</h2>
+                            <p class="results-meta">
+                                Total: <span id="batchTotal"></span> queries | 
+                                Avg Latency: <span id="batchLatency"></span>s
+                            </p>
+                        </div>
+                        <button class="btn-secondary" id="exportBatchBtn">
+                            <i class="fas fa-download"></i> Export Results
+                        </button>
+                    </div>
+                    <div class="batch-table-wrapper">
+                        <table class="batch-table" id="batchTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Query</th>
+                                    <th>Retrieved Standards</th>
+                                    <th>Latency</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="batchTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browse Standards Tab -->
+            <div class="tab-panel" id="browse-panel">
+                <div class="browse-card">
+                    <div class="browse-header">
+                        <h2><i class="fas fa-book"></i> BIS SP 21 Knowledge Base</h2>
+                        <p class="hint">Browse all <span id="totalStandards">0</span> standards in the database</p>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <div class="input-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="browseSearch" placeholder="Search standards...">
+                        </div>
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+                    
+                    <div class="standards-list" id="standardsList"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>BIS × Sigma Squad AI Hackathon 2026 | Built for MSE Compliance Acceleration</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Modal for Detail View -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Standard Details</h3>
+                <button class="btn-icon" id="modalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
+

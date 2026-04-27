@@ -1,0 +1,112 @@
+[
+  {
+    "id": "q01",
+    "retrieved_standards": [
+      "IS 12269",
+      "IS 8112",
+      "IS 269",
+      "IS 12600",
+      "IS 8041"
+    ],
+    "latency_seconds": 0.0085
+  },
+  {
+    "id": "q02",
+    "retrieved_standards": [
+      "IS 1786",
+      "IS 456",
+      "IS 432 (Part 1)",
+      "IS 2062",
+      "IS 1161"
+    ],
+    "latency_seconds": 0.0095
+  },
+  {
+    "id": "q03",
+    "retrieved_standards": [
+      "IS 456",
+      "IS 10262",
+      "IS 4926",
+      "IS 12269",
+      "IS 9103"
+    ],
+    "latency_seconds": 0.0079
+  },
+  {
+    "id": "q04",
+    "retrieved_standards": [
+      "IS 13757",
+      "IS 12894",
+      "IS 3812",
+      "IS 456",
+      "IS 1489 (Part 1)"
+    ],
+    "latency_seconds": 0.0082
+  },
+  {
+    "id": "q05",
+    "retrieved_standards": [
+      "IS 10262",
+      "IS 383",
+      "IS 456",
+      "IS 9103",
+      "IS 1199"
+    ],
+    "latency_seconds": 0.008
+  },
+  {
+    "id": "q06",
+    "retrieved_standards": [
+      "IS 1489 (Part 1)",
+      "IS 1489 (Part 2)",
+      "IS 455",
+      "IS 8112",
+      "IS 269"
+    ],
+    "latency_seconds": 0.008
+  },
+  {
+    "id": "q07",
+    "retrieved_standards": [
+      "IS 9103",
+      "IS 3812",
+      "IS 10262",
+      "IS 4926",
+      "IS 1199"
+    ],
+    "latency_seconds": 0.0253
+  },
+  {
+    "id": "q08",
+    "retrieved_standards": [
+      "IS 6441",
+      "IS 9103",
+      "IS 10262",
+      "IS 3812",
+      "IS 4926"
+    ],
+    "latency_seconds": 0.008
+  },
+  {
+    "id": "q09",
+    "retrieved_standards": [
+      "IS 1343",
+      "IS 9103",
+      "IS 8112",
+      "IS 10262",
+      "IS 4926"
+    ],
+    "latency_seconds": 0.0076
+  },
+  {
+    "id": "q10",
+    "retrieved_standards": [
+      "IS 15622",
+      "IS 1237",
+      "IS 2386 (Parts 1–8)",
+      "IS 777",
+      "IS 654"
+    ],
+    "latency_seconds": 0.0078
+  }
+]
