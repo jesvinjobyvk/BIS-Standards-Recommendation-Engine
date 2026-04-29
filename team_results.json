@@ -1,0 +1,57 @@
+[
+  {
+    "id": "q1",
+    "retrieved_standards": [
+      "IS 12269",
+      "IS 8112",
+      "IS 269",
+      "IS 12600",
+      "IS 455"
+    ],
+    "latency_seconds": 0.0142
+  },
+  {
+    "id": "q2",
+    "retrieved_standards": [
+      "IS 1786",
+      "IS 456",
+      "IS 432 (Part 1)",
+      "IS 2062",
+      "IS 1161"
+    ],
+    "latency_seconds": 0.0147
+  },
+  {
+    "id": "q3",
+    "retrieved_standards": [
+      "IS 1489 (Part 1)",
+      "IS 3812",
+      "IS 455",
+      "IS 12600",
+      "IS 1489 (Part 2)"
+    ],
+    "latency_seconds": 0.0133
+  },
+  {
+    "id": "q4",
+    "retrieved_standards": [
+      "IS 1786",
+      "IS 432 (Part 1)",
+      "IS 2062",
+      "IS 808",
+      "IS 1161"
+    ],
+    "latency_seconds": 0.0127
+  },
+  {
+    "id": "q5",
+    "retrieved_standards": [
+      "IS 383",
+      "IS 10262",
+      "IS 456",
+      "IS 9103",
+      "IS 4926"
+    ],
+    "latency_seconds": 0.0127
+  }
+]
